@@ -42,23 +42,7 @@ This project solves that problem by building an intelligent automation pipeline 
 
 # Project Architecture
 
-```text
-EventBridge Scheduler
-        ↓
-Step Functions Workflow
-        ↓
-Find gp2 Volumes Lambda
-        ↓
-Log Audit to DynamoDB
-        ↓
-Convert gp2 → gp3
-        ↓
-Wait State
-        ↓
-Verify Modification
-        ↓
-SNS Notification
-```
+![](./img/Architecture%20Dig.png)
 
 ---
 
