@@ -120,6 +120,7 @@ AmazonSSMManagedInstanceCore
 ```text
 ec2-ebs-demo-role
 ```
+![](./img/Screenshot%202026-05-28%20180221.png)
 
 ### Why This Role?
 
@@ -191,6 +192,8 @@ ec2-ebs-demo-role
 
 Launch instance.
 
+![](./img/Screenshot%202026-05-28%20180608.png)
+
 ---
 
 # Step 5 — Verify Root Volume
@@ -207,6 +210,8 @@ Ensure:
 | -------- | -------- |
 | Type     | gp2      |
 | State    | in-use   |
+
+![](./img/Screenshot%202026-05-28%20180649.png)
 
 ---
 
@@ -244,7 +249,9 @@ The Lambda scans only volumes tagged:
 ```text
 AutoConvert=true
 ```
+![](./img/Screenshot%202026-05-28%20181050.png)
 
+![](./img/Screenshot%202026-05-28%20181105.png)
 ---
 
 # Step 7 — Attach Volume
@@ -261,6 +268,8 @@ Device:
 /dev/xvdf
 ```
 
+![](./img/Screenshot%202026-05-28%20181144.png)
+
 ---
 
 # Step 8 — Verify Attached Volume
@@ -273,6 +282,7 @@ EC2 → Instance → Storage
 
 Verify both volumes are attached.
 
+![](./img/Screenshot%202026-05-28%20181256.png)
 ---
 
 # Step 9 — Connect Using Session Manager
