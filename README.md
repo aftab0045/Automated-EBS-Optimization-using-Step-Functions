@@ -309,6 +309,8 @@ Expected:
 xvda
 xvdf
 ```
+![](./img/Screenshot%202026-05-28%20181540.png)
+![](./img/Screenshot%202026-05-28%20181839.png)
 
 ---
 
@@ -355,6 +357,10 @@ SNS → Create Topic
 | Type    | Standard          |
 | Name    | ebs-volume-alerts |
 
+![](./img/Screenshot%202026-05-28%20183040.png)
+
+![](./img/Screenshot%202026-05-28%20183227.png)
+
 ---
 
 # Step 3 — Create Email Subscription
@@ -370,6 +376,10 @@ IMPORTANT:
 
 Confirm subscription using the email received from AWS.
 
+
+![](./img/Screenshot%202026-05-28%20183510.png)
+![](./img/Screenshot%202026-05-28%20183525.png)
+![](./img/Screenshot%202026-05-28%20183715.png)
 ---
 
 # Step 4 — Create IAM Role for Lambda
@@ -388,6 +398,7 @@ AmazonDynamoDBFullAccess
 AmazonSNSFullAccess
 CloudWatchLogsFullAccess
 ```
+![](./img/Screenshot%202026-05-28%20184042.png)
 
 ---
 
@@ -405,6 +416,7 @@ Attach:
 AWSLambdaRole
 AWSStepFunctionsFullAccess
 ```
+![](./img/Screenshot%202026-05-28%20184303.png)
 
 ---
 
@@ -443,6 +455,10 @@ Scans:
 
 Returns matching volumes.
 
+![](./img/Screenshot%202026-05-28%20185116.png)
+![](./img/Screenshot%202026-05-28%20185301.png)
+
+
 ---
 
 ## 2. Log Audit Lambda
@@ -456,6 +472,10 @@ Stores:
 * Volume Type
 
 inside DynamoDB.
+
+![](./img/Screenshot%202026-05-28%20185740.png)
+![](./img/Screenshot%202026-05-28%20185815.png)
+
 
 ---
 
@@ -473,6 +493,9 @@ to convert:
 gp2 → gp3
 ```
 
+![](./img/Screenshot%202026-05-28%20185935.png)
+![](./img/Screenshot%202026-05-28%20190023.png)
+
 ---
 
 ## 4. Verify Lambda
@@ -489,6 +512,9 @@ using:
 describe_volumes_modifications()
 ```
 
+![](./img/Screenshot%202026-05-28%20190136.png)
+![](./img/Screenshot%202026-05-28%20190217.png)
+
 ---
 
 ## 5. SNS Notification Lambda
@@ -499,8 +525,33 @@ Publishes SNS email alerts containing:
 * Conversion status
 * Region
 
----
+![](./img/Screenshot%202026-05-28%20190527.png)
 
+---
+# this part modify i'm doing manual test in lambda so that no error in upcoming steps to check each lambda working correct
+# This is the success message of find gp2 volume 
+![](./img/Screenshot%202026-05-28%20185553.png)
+# This Log EBS Adit test successfull manuall
+![](./img/Screenshot%202026-05-28%20191626.png)
+![](./img/Screenshot%202026-05-28%20191732.png)
+# Successfully created table in Dyanmodb of logs 
+![](./img/Screenshot%202026-05-28%20191843.png)
+# Test of convert gp2-gp3 lambda function 
+![](./img/Screenshot%202026-05-28%20192022.png)
+# Success of this test - Test of convert gp2-gp3 lambda function 
+![](./img/Screenshot%202026-05-28%20192055.png)
+# This is verify volume modification test 
+![](./img/Screenshot%202026-05-28%20193156.png)
+# This is success message of this test - This is verify volume modification test 
+![](./img/Screenshot%202026-05-28%20193219.png)
+# This test is to send message after modification
+![](./img/Screenshot%202026-05-28%20193326.png)
+# Success message of this test This test is to send message after modification
+![](./img/Screenshot%202026-05-28%20193338.png)
+![](./img/Screenshot%202026-05-28%20193359.png)
+# this SS is that volume modify from gp2-gp3
+![](./img/Screenshot%202026-05-28%20193911.png)
+---
 # Lambda Testing Flow
 
 Each Lambda was tested individually using test events.
@@ -557,15 +608,6 @@ stepfunction-ebs-role
 
 ---
 
-# Step Function Features
-
-* Visual workflow execution
-* Central orchestration
-* Retry capability
-* State tracking
-* Debugging support
-
----
 
 # Manual Workflow Execution
 
