@@ -609,6 +609,7 @@ The **send-ebs-notification** Lambda function was tested to verify that email no
 
 #### Successful SNS Publish Response
 
+
 ![](./img/Screenshot%202026-05-28%20193338.png)
 
 #### Email Notification Received Successfully
