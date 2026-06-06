@@ -528,29 +528,119 @@ Publishes SNS email alerts containing:
 ![](./img/Screenshot%202026-05-28%20190527.png)
 
 ---
-# this part modify i'm doing manual test in lambda so that no error in upcoming steps to check each lambda working correct
-# This is the success message of find gp2 volume 
+## Manual Testing of Individual Lambda Functions
+
+Before integrating all Lambda functions into the Step Functions workflow, each Lambda was tested individually to verify functionality, permissions, data flow, and error handling. This validation ensured that every component was working correctly before building the complete automation pipeline.
+
+### Test 1 – Find GP2 Volumes Lambda
+
+The **find-gp2-volumes** Lambda function was tested to verify that it successfully scans EBS volumes and filters only those that meet the following conditions:
+
+* Volume Type = gp2
+* Tag AutoConvert = true
+
+The successful response confirmed that the Lambda was able to identify eligible volumes for optimization.
+
+#### Successful Execution Output
+
 ![](./img/Screenshot%202026-05-28%20185553.png)
-# This Log EBS Adit test successfull manuall
+
+---
+
+### Test 2 – Log EBS Audit Lambda
+
+The **log-ebs-audit** Lambda function was tested using the output generated from the previous Lambda. The purpose of this test was to verify that volume details are successfully stored in the DynamoDB audit table.
+
+#### Lambda Execution Test
+
 ![](./img/Screenshot%202026-05-28%20191626.png)
+
+#### Successful Lambda Response
+
 ![](./img/Screenshot%202026-05-28%20191732.png)
-# Successfully created table in Dyanmodb of logs 
+
+#### DynamoDB Audit Records Successfully Created
+
+The following screenshot confirms that the volume information was successfully stored in the **EBSVolumeAudit** DynamoDB table.
+
 ![](./img/Screenshot%202026-05-28%20191843.png)
-# Test of convert gp2-gp3 lambda function 
+
+---
+
+### Test 3 – Convert GP2 to GP3 Lambda
+
+The **convert-gp2-gp3** Lambda function was tested to verify that it successfully initiates the EBS volume modification process from gp2 to gp3.
+
+#### Lambda Conversion Test
+
 ![](./img/Screenshot%202026-05-28%20192022.png)
-# Success of this test - Test of convert gp2-gp3 lambda function 
+
+#### Successful Conversion Request Initiated
+
+The Lambda returned a successful response indicating that the volume modification process had started.
+
 ![](./img/Screenshot%202026-05-28%20192055.png)
-# This is verify volume modification test 
+
+---
+
+### Test 4 – Verify Volume Modification Lambda
+
+The **verify-volume-modification** Lambda function was tested to monitor the status of the EBS modification process and confirm whether the conversion was completed successfully.
+
+#### Verification Lambda Test
+
 ![](./img/Screenshot%202026-05-28%20193156.png)
-# This is success message of this test - This is verify volume modification test 
+
+#### Successful Verification Response
+
+The Lambda successfully returned the modification status of the target EBS volume.
+
 ![](./img/Screenshot%202026-05-28%20193219.png)
-# This test is to send message after modification
+
+---
+
+### Test 5 – SNS Notification Lambda
+
+The **send-ebs-notification** Lambda function was tested to verify that email notifications are sent through Amazon SNS after a successful volume modification.
+
+#### SNS Notification Test
+
 ![](./img/Screenshot%202026-05-28%20193326.png)
-# Success message of this test This test is to send message after modification
+
+#### Successful SNS Publish Response
+
 ![](./img/Screenshot%202026-05-28%20193338.png)
+
+#### Email Notification Received Successfully
+
+The following screenshot confirms that the notification email was successfully delivered to the subscribed email address.
+
 ![](./img/Screenshot%202026-05-28%20193359.png)
-# this SS is that volume modify from gp2-gp3
+
+---
+
+### Verification of EBS Volume Conversion
+
+After completing all Lambda tests successfully, the EBS volume was verified in the EC2 console to confirm that the volume type had been changed from **gp2** to **gp3**.
+
+#### EBS Volume Successfully Converted from GP2 to GP3
+
 ![](./img/Screenshot%202026-05-28%20193911.png)
+
+---
+
+### Testing Conclusion
+
+All Lambda functions were validated independently before integrating them into the Step Functions workflow. This testing phase confirmed:
+
+* Successful identification of eligible gp2 volumes
+* Successful audit logging into DynamoDB
+* Successful EBS volume conversion from gp2 to gp3
+* Successful verification of modification status
+* Successful SNS email notification delivery
+
+With all components verified, the project was ready for Step Functions orchestration and EventBridge automation.
+
 ---
 # Lambda Testing Flow
 
@@ -582,6 +672,8 @@ Verify Conversion
       ↓
 Send Notification
 ```
+![](/img/Screenshot%202026-05-28%20194604.png)
+![](/img/Screenshot%202026-05-28%20194625.png)
 
 ---
 
@@ -605,6 +697,8 @@ Role:
 ```text
 stepfunction-ebs-role
 ```
+![](/img/Screenshot%202026-05-28%20194822.png)
+![](/img/Screenshot%202026-05-28%20194849.png)
 
 ---
 
@@ -658,6 +752,10 @@ Lambda Workflow
 SNS Notification
 ```
 
+![](/img/Screenshot%202026-05-28%20195009.png)
+![](/img/Screenshot%202026-05-28%20195054.png)
+![](/img/Screenshot%202026-05-28%20195110.png)
+
 ---
 
 # Verification Performed
@@ -669,21 +767,34 @@ SNS Notification
 * gp2 volume detection
 * gp3 conversion
 
+![](/img/Screenshot%202026-05-28%20195130.png)
+
 ### DynamoDB
 
 * audit entries stored successfully
+
+![](/img/Screenshot%202026-05-28%20195532.png)
 
 ### SNS
 
 * email alerts received
 
+![](/img/Screenshot%202026-05-28%20195159.png)
+
+![](/img/Screenshot%202026-05-28%20202951.png)
+
 ### Step Functions
 
 * successful execution states
 
+![](/img/Screenshot%202026-05-28%20202210.png)
+
+
 ### EventBridge
 
 * automatic scheduled execution
+
+![](/img/Screenshot%202026-05-28%20202454.png)
 
 ### CloudWatch
 
@@ -751,20 +862,6 @@ This project demonstrates practical implementation of:
 * AWS orchestration
 * Monitoring and alerting
 * Infrastructure optimization
-
----
-
-# Future Enhancements
-
-Possible future improvements:
-
-* Least privilege IAM policies
-* Multi-region support
-* Slack notifications
-* Auto rollback support
-* Cost analytics dashboard
-* AWS Config integration
-* CloudFormation/Terraform deployment
 
 ---
 
